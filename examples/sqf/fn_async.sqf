@@ -9,7 +9,7 @@
 	Parameters:
 		0: STRING (Query to be ran).
 		1: INTEGER (1 = ASYNC + not return for update/insert, 2 = ASYNC + return for query's).
-		3: BOOL (False to return a single array, True to return multiple entries mainly for garage).
+		2: BOOL (False to return a single array, True to return multiple entries mainly for garage).
 */
 
 private["_queryStmt","_queryResult","_key","_mode","_return","_loop"];
@@ -63,7 +63,7 @@ _queryResult = call compile _queryResult;
 if ((_queryResult select 0) isEqualTo 0) exitWith {diag_log format ["extDB2: Protocol Error: %1", _queryResult]; []};
 _return = (_queryResult select 1);
 
-if(!_multiarr) then {
+if(!_multiarr && !(_return isEqualTo [])) then {
 	_return = _return select 0;
 };
 
